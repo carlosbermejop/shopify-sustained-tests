@@ -11,6 +11,7 @@ import json
 
 
 HANDLED_COOKIES = False
+PURCHASE_INTERVAL = 45
 
 
 @contextmanager
@@ -70,6 +71,7 @@ def purchase_product(browser):
         except Exception as e:
             print(f"ERROR: {e}")
             pass
+    print("Sustained purchasing interval elapsed.")
 
 
 def login_into_shopify(browser):
@@ -185,8 +187,8 @@ def complete_product_purchase(
         f"¡Gracias, {buyer_info["buyer_name"]}!", wait_time=10
     )
     assert result_text.is_visible()
-    print("Order completed correctly, waiting 60 seconds...\n\n")
-    time.sleep(60)
+    print(f"Order completed correctly, waiting {PURCHASE_INTERVAL} seconds...\n\n")
+    time.sleep(PURCHASE_INTERVAL)
 
 
 if __name__ == "__main__":
