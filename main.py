@@ -23,7 +23,7 @@ def browser_setup():
 
 
 def purchase_product(browser):
-    seconds = 30
+    seconds = 3600
     max_time = int(seconds)
     start_time = time.time()
     while (time.time() - start_time) < max_time:
@@ -186,7 +186,7 @@ def complete_product_purchase(
     )
     assert result_text.is_visible()
     print("Order completed correctly, waiting 60 seconds...\n\n")
-    # time.sleep(60)
+    time.sleep(60)
 
 
 if __name__ == "__main__":
