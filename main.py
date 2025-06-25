@@ -11,12 +11,13 @@ import json
 
 
 HANDLED_COOKIES = False
-PURCHASE_INTERVAL = 45
+MAX_TEST_DURATION_IN_SECONDS = 3600
+PURCHASE_INTERVAL_IN_SECONDS = 45
 
 
 @contextmanager
 def browser_setup():
-    browser = Browser("chrome")
+    browser = Browser("chrome", headless=True)
     try:
         yield browser
     finally:
@@ -24,7 +25,7 @@ def browser_setup():
 
 
 def purchase_product(browser):
-    seconds = 3600
+    seconds = MAX_TEST_DURATION_IN_SECONDS
     max_time = int(seconds)
     start_time = time.time()
     while (time.time() - start_time) < max_time:
@@ -36,7 +37,7 @@ def purchase_product(browser):
             HANDLED_COOKIES = handle_cookies_shoopify(browser, HANDLED_COOKIES)
 
             array_of_products = None
-            with open("products.json", "r") as file:
+            with open("shopify-products.json", "r") as file:
                 array_of_products = json.load(file)
             random_product_ISBN = random.choice(array_of_products)
 
@@ -187,8 +188,8 @@ def complete_product_purchase(
         f"¡Gracias, {buyer_info["buyer_name"]}!", wait_time=10
     )
     assert result_text.is_visible()
-    print(f"Order completed correctly, waiting {PURCHASE_INTERVAL} seconds...\n\n")
-    time.sleep(PURCHASE_INTERVAL)
+    print(f"Order completed correctly, waiting {PURCHASE_INTERVAL_IN_SECONDS} seconds...\n\n")
+    time.sleep(PURCHASE_INTERVAL_IN_SECONDS)
 
 
 if __name__ == "__main__":
