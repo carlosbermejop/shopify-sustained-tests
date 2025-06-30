@@ -11,13 +11,13 @@ import json
 
 
 HANDLED_COOKIES = False
-MAX_TEST_DURATION_IN_SECONDS = 3600
+MAX_TEST_DURATION_IN_SECONDS = 45
 PURCHASE_INTERVAL_IN_SECONDS = 45
 
 
 @contextmanager
 def browser_setup():
-    browser = Browser("chrome", headless=True)
+    browser = Browser("chrome")
     try:
         yield browser
     finally:
@@ -55,18 +55,18 @@ def purchase_product(browser):
             }
 
             buyer_info = {
-                "buyer_name": "Automation",
-                "buyer_surname": "Automatez",
-                "address_name": "Avenida de Castilla 12",
+                "buyer_name": "Pruebas",
+                "buyer_surname": "Sostenidas",
+                "address_name": "Avenida de Castilla 13",
                 "postcode": "28830",
                 "city": "San Fernando",
-                "province": "Madrid",
+                "province": "M",
             }
 
             invoice_info = {"document_type": "nif", "document_number": "99345262M"}
 
             complete_product_purchase(
-                "oxfordpremiumqa@gmail.com", card_info, buyer_info, invoice_info, None
+                "oxfordpremiumqa+pruebas@gmail.com", card_info, buyer_info, invoice_info, None
             )
             time.sleep(5)
         except Exception as e:
@@ -162,6 +162,8 @@ def complete_product_purchase(
     postcode_input_by_id.type(buyer_info["postcode"])
     city_input_by_id = browser.find_by_id(PAGE_OBJECTS["elem"]["city_input_by_id"])
     city_input_by_id.type(buyer_info["city"])
+    province_input_by_name = browser.find_by_name(PAGE_OBJECTS["elem"]["province_input_by_name"])
+    province_input_by_name.select(buyer_info["province"])
 
     checkboxes = browser.find_by_css('input[type="checkbox"]')
 
@@ -188,7 +190,9 @@ def complete_product_purchase(
         f"¡Gracias, {buyer_info["buyer_name"]}!", wait_time=10
     )
     assert result_text.is_visible()
-    print(f"Order completed correctly, waiting {PURCHASE_INTERVAL_IN_SECONDS} seconds...\n\n")
+    print(
+        f"Order completed correctly, waiting {PURCHASE_INTERVAL_IN_SECONDS} seconds...\n\n"
+    )
     time.sleep(PURCHASE_INTERVAL_IN_SECONDS)
 
 

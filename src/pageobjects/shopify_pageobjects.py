@@ -19,6 +19,7 @@ PAGE_OBJECTS = {
         "address_input_by_id": "billing-address1",
         "postcode_input_by_id": "TextField3",
         "city_input_by_id": "TextField4",
+        "province_input_by_name": "zone",
         "id_card_type_select_box_by_id": "Select2",
         "id_card_number_input_by_id": "TextField5",
         "checkout_btn_by_id": "checkout-pay-button",
